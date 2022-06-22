@@ -1,11 +1,12 @@
 import { useAuth } from "../../../core/auth/auth.hook";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
+import { IonButton, IonInput, IonPage, IonText } from "@ionic/react";
 // import { UserRegister } from "../../../core/auth/auth.model";
 
 const Register = () => {
 
-    const { register, dismiss, isAuth } = useAuth();
+    const { register, isAuth } = useAuth();
     const [showEmailComfirm, updateShowEmail] = useState(false);
     const history = useHistory();
     if (isAuth) history.push("/"); // if enter to the loggin register page, no 
@@ -13,6 +14,7 @@ const Register = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 
         e.preventDefault();
+
         const user = {
             // name: e.currentTarget.name.value,
             // surname: e.currentTarget.surname.value,
@@ -24,31 +26,28 @@ const Register = () => {
 
         };
         register(user).then(() => updateShowEmail(true));
+    }
 
+    return (
 
-        return (
-            <>
-                {/* {dismiss ? <p>Loading</p> : */}
-                <>
-                    {showEmailComfirm ? <p>Te hemos enviado un email, revisa tu bandeja para validarlo.</p> : ''}
-                    <form onSubmit={handleSubmit}>
+        <IonPage>
+            {showEmailComfirm ? <IonText>Te hemos enviado un email, revisa tu bandeja para validarlo.</IonText> : ''}
+            <form onSubmit={handleSubmit}>
 
-                        {/* <input type="text" placeholder="Introduzca su nombre" name="name" id="" ></input> */}
-                        {/* <input type="text" placeholder="Introduzca su apellido" name="surname" id="" ></input>
+                {/* <input type="text" placeholder="Introduzca su nombre" name="name" id="" ></input> */}
+                {/* <input type="text" placeholder="Introduzca su apellido" name="surname" id="" ></input>
                             <input type="number" placeholder="Introduzca su edad" name="age" id="" ></input>
                             <input type="number" placeholder="Introduzca su altura en cm" name="height" id="" ></input>
                             <input type="number" placeholder="Introduzca su peso en kg" name="weight" id="" ></input> */}
-                        <input type="email" placeholder="Introduzca email"></input>
-                        <input type="password" placeholder="Introduzca password"></input>
-                        <button type="submit">Registrarse</button>
+                <IonInput name="email" type="email" placeholder="Introduzca email"></IonInput>
+                <IonInput name="pass" type="password" placeholder="Introduzca password"></IonInput>
+                <IonButton type="submit">Registrarse</IonButton>
 
-                    </form>
-                </>
-                {/* } */}
-            </>
-        )
+            </form>
+        </IonPage>
+    )
 
-    }
 }
+
 
 export default Register;

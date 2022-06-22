@@ -1,15 +1,20 @@
 import { useUser } from "../../core/users/user.hook";
+import React from "react";
+import { IonItem, IonPage, IonText, IonTitle } from "@ionic/react";
 
 
-function User() {
+const User: React.FC = () => {
     const { user } = useUser();
 
-    return(
-        <div>
-            <h1>User</h1>
-            <p>{user.email}</p>
-            <p>{user.password}</p>
-        </div>
+    return (
+
+        <IonPage>
+            <IonItem>
+                <IonTitle>User: </IonTitle>
+                <IonText>{user?.email}</IonText>
+                <IonText>{user?.password}</IonText>
+            </IonItem>
+        </IonPage>
     )
 
 }

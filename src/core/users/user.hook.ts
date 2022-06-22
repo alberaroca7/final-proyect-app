@@ -2,15 +2,16 @@ import { getUserInfo } from "./user.api";
 import { useState, useEffect } from "react";
 
 
+
 export const useUser = () => {
-    const [user, updateUser] = useState<User | null>(null);
+    const [user, updateUser] = useState({ email: "email", password: "password" });
 
     useEffect(() => {
         getUserInfo()
             .then(u => updateUser)
     }, []);
 
-    return user;
+    return { user };
 
 }
 

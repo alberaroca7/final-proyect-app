@@ -1,5 +1,6 @@
 import { useIonLoading } from "@ionic/react";
 import { useState } from "react";
+import { useLocation } from "react-router";
 import { registerAPI, loginAPI, validateTokenAPI } from "./auth.api"
 import { UserLogin, UserRegister } from "./auth.model";
 import { AUTH_STORAGE_KEY } from "./auth.utils";
@@ -17,7 +18,6 @@ import { AUTH_STORAGE_KEY } from "./auth.utils";
  *    - login function
  *    - validate function
  */
-
 
 
 export const useAuth = () => {
@@ -50,11 +50,16 @@ export const useAuth = () => {
 
     return {
         isAuth,
-        dismiss,
         register,
         login,
         validate
     }
 
 
+}
+
+export const useQuery = () => {
+
+    const { search } = useLocation();
+    return new URLSearchParams(search);
 }

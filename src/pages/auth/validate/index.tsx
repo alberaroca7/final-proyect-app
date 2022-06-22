@@ -1,32 +1,30 @@
-import { useHistory, useSearchParams, Link } from "react-router-dom";
-import { useEffect } from 'react';
+import { useHistory, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../../../core/auth/auth.hook";
-import { useIonLoading } from "@ionic/react";
+import { IonItem, IonLabel, IonPage, IonTitle, useIonViewWillEnter } from "@ionic/react";
+import { useQuery } from "../../../core/auth/auth.hook";
+
 
 
 const Validate = () => {
 
-    const [present, dismiss] = useIonLoading();
     const { isAuth, validate } = useAuth();
     const history = useHistory();
-    const [searchParams] = useSearchParams();
+    const location = useLocation();
+    const query = useQuery();
     if (isAuth) history.push("/"); // if enter to register page (login), not permit to enter to register page and redirect to home page
-    useEffect(() => {
-        validate(searchParams.get("token"));
-    }, [searchParams, validate]);
+
+    useIonViewWillEnter(() => {
+        validate(query.get("token") ?? "")
+    }, [location]);
+
     return (
-        <>
-            {
-                dismiss 
-                    ? <h1>Validando su email...</h1>
-                    : (
-                        <>
-                            <h1>Su email se ha validado con éxito. Ya puedes hacer login</h1>
-                            <Link to={'/auth/login'}>Ir a Login</Link>
-                        </>
-                    )
-            }
-        </>
+        <IonPage>
+            <IonTitle>Su email se ha validado con éxito. Ya puedes hacer login</IonTitle>
+            {/* <Link to={'/auth/login'}>Ir a Login</Link> */}
+            <IonItem routerLink="">
+                <IonLabel>Ir a login</IonLabel>
+            </IonItem>
+        </IonPage>
     )
 }
 

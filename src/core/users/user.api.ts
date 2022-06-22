@@ -8,5 +8,6 @@ import { wrapUsingAuth } from "../auth/auth.utils";
 
 export const getUserInfo = async () => {
     const r = await fetch(`${process.env.REACT_APP_API_BASE_URL}/users`, wrapUsingAuth());
+    console.log(r);
 
 }
